@@ -26,6 +26,20 @@ function send_booking_email() {
     $info = filter_input(INPUT_POST, 'info', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     $date = filter_input(INPUT_POST, 'date', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     $slot = filter_input(INPUT_POST, 'slot', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY);
+
+    // Validate required fields
+    if (!$name || !$email || !$telephone || !$city || !$size || !$aantal || !$date || !$slot) {
+        echo json_encode(["status" => "error", "message" => "Please fill in all required fields."]);
+        exit();
+    }
+
+    // Ensure $to is set correctly
+    global $to, $toname, $smtp_server, $smtp_username, $smtp_password, $smtp_port;
+    if (empty($to)) {
+        echo json_encode(["status" => "error", "message" => "Invalid address: (to): $to"]);
+        exit();
+    }
+
     $fmtDate = new IntlDateFormatter($lang == 'en_EN' ? 'en_GB' : 'nl_NL', IntlDateFormatter::FULL, IntlDateFormatter::NONE);
     $fmtTime = new IntlDateFormatter($lang == 'en_EN' ? 'en_GB' : 'nl_NL', IntlDateFormatter::NONE, IntlDateFormatter::SHORT);
     $subject = Language::translate("email-subject");
@@ -76,9 +90,9 @@ function send_booking_email() {
     // booking manager = receiver
     $send_to_address = $to;
     $send_to_name = $toname;
-    
+
     $mail = new PHPMailer(true);
-    
+
     // Server settings
     $mail->SMTPDebug = 2;                      // Enable verbose debug output
     $mail->isSMTP();                                            // Send using SMTP

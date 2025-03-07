@@ -173,6 +173,8 @@ button.selected {
     border: 4px solid var(--button-bg-color); 
 }
 
+
+
 @media (max-width: 1080px) {
     /*.fc-daygrid-event .fc-event-time {
         display: none !important;
