@@ -12,7 +12,7 @@ function hello_bookme_shortcode($atts) {
         return 'No ICS URL provided.';
     }
 
-    loadLang($atts['lang']);
+    loadLang(isset($_GET['lang']) ? $_GET['lang'] : $atts['lang']);//loadLang($atts['lang']);
     $bookme = new calendarAvailabillity($atts['ics_url']);
     ob_start();
     ?>

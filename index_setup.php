@@ -139,6 +139,12 @@ $bookme = new calendarAvailabillity($icsurl);
     </div>
 
     <script>
+        var translations = <?php echo json_encode(Language::$instance->trans); ?>;
+        var lang = '<?php echo isset($_GET['lang']) ? $_GET['lang'] : 'nl_NL'; ?>';
+    </script>
+    <script src="assets/hello-bookme.js"></script>
+
+    <script>
         jQuery(document).ready(function($) {
             var calendarEl = document.getElementById('bookingcalendar');
             var selectedDate, selectedSlot, formData;

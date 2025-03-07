@@ -1,6 +1,10 @@
 document.addEventListener('DOMContentLoaded', function() {
     var selectedDate, selectedSlot, formData;
 
+    function translate(key) {
+        return translations[key] || key;
+    }
+
     function loadTimeSlots(date) {
         $('#timeslots').empty();
         var locale = lang === 'en_EN' ? 'en-GB' : 'nl-NL';
@@ -90,15 +94,15 @@ document.addEventListener('DOMContentLoaded', function() {
                  infotext = 'n.v.t.';
             }
             $('#review').html(`
-                <p>${Language.translate("date")}: ${selectedDate}</p>
-                <p>${Language.translate("time-slot")}: ${selectedSlot.title} (${selectedSlot.start.split('T')[1].substring(0, 5)} - ${selectedSlot.end.split('T')[1].substring(0, 5)})</p>
-                <p>${Language.translate("name")}: ${formData.find(field => field.name === 'name').value}</p>
-                <p>${Language.translate("email")}: ${formData.find(field => field.name === 'email').value}</p>
-                <p>${Language.translate("telephone")}: ${formData.find(field => field.name === 'telephone').value}</p>
-                <p>${Language.translate("city")}: ${formData.find(field => field.name === 'city').value}</p>
-                <p>${Language.translate("size")}: ${formData.find(field => field.name === 'size').value}</p>
-                <p>${Language.translate("visitors")}: ${formData.find(field => field.name === 'bezoekers').value}</p>
-                <p>${Language.translate("additional-info")}: ${infotext}</p>
+                <p>${translate("date")}: ${selectedDate}</p>
+                <p>${translate("time-slot")}: ${selectedSlot.title} (${selectedSlot.start.split('T')[1].substring(0, 5)} - ${selectedSlot.end.split('T')[1].substring(0, 5)})</p>
+                <p>${translate("name")}: ${formData.find(field => field.name === 'name').value}</p>
+                <p>${translate("email")}: ${formData.find(field => field.name === 'email').value}</p>
+                <p>${translate("telephone")}: ${formData.find(field => field.name === 'telephone').value}</p>
+                <p>${translate("city")}: ${formData.find(field => field.name === 'city').value}</p>
+                <p>${translate("size")}: ${formData.find(field => field.name === 'size').value}</p>
+                <p>${translate("visitors")}: ${formData.find(field => field.name === 'bezoekers').value}</p>
+                <p>${translate("additional-info")}: ${infotext}</p>
             `);
             $('#step3').removeClass('active');
             $('#step4').addClass('active');
@@ -131,12 +135,12 @@ document.addEventListener('DOMContentLoaded', function() {
             lang: lang
         }, function(response) {
             $('#confirmation').html(`
-                <p>${Language.translate("name")}: ${formData.find(field => field.name === 'name').value}</p>
-                <p>${Language.translate("email")}: ${formData.find(field => field.name === 'email').value}</p>
-                <p>${Language.translate("telephone")}: ${formData.find(field => field.name === 'telephone').value}</p>
-                <p>${Language.translate("date")}: ${selectedDate}</p>
-                <p>${Language.translate("time-slot")}: ${selectedSlot.title} (${selectedSlot.start.split('T')[1].substring(0, 5)} - ${selectedSlot.end.split('T')[1].substring(0, 5)})</p>
-                <p>${Language.translate("visitors")}: ${formData.find(field => field.name === 'bezoekers').value}</p>
+                <p>${translate("name")}: ${formData.find(field => field.name === 'name').value}</p>
+                <p>${translate("email")}: ${formData.find(field => field.name === 'email').value}</p>
+                <p>${translate("telephone")}: ${formData.find(field => field.name === 'telephone').value}</p>
+                <p>${translate("date")}: ${selectedDate}</p>
+                <p>${translate("time-slot")}: ${selectedSlot.title} (${selectedSlot.start.split('T')[1].substring(0, 5)} - ${selectedSlot.end.split('T')[1].substring(0, 5)})</p>
+                <p>${translate("visitors")}: ${formData.find(field => field.name === 'bezoekers').value}</p>
             `);
             $('#step4').removeClass('active');
             $('#step5').addClass('active');
@@ -166,7 +170,6 @@ document.addEventListener('DOMContentLoaded', function() {
         },
         initialView: 'dayGridMonth',
         selectable: true,
-        selectHelper: true,
         events: events,
         select: function(info) {
             selectedDate = info.startStr;
